@@ -1,0 +1,21 @@
+<!--pages/manual/manual.wxml-->
+<form bindsubmit="bindFormSubmit" class="root">
+  <view class="line">
+      <button class="demo" form-type="submit">
+          精读编辑
+          <view class="link">开始 ></view>
+      </button>
+  </view>
+  <br/>
+  <view class="line">
+    <view class="line-control">
+      <textarea placeholder='在此处粘贴或编辑正文' value='{{inputText}}' name="inputText"></textarea>
+    </view>
+  </view>
+  <view class="line">
+    <view class="line-control">
+      <textarea placeholder='在此处粘贴或编辑注释' value='{{inputRemark}}' name="inputRemark"></textarea>
+    </view>
+  </view>
+
+</form>

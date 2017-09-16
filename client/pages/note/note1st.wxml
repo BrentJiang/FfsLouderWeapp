@@ -1,0 +1,44 @@
+<!--pages/note/note.wxml-->
+<swiper circular="true" current='{{currentSwiper}}' interval="1000" duration="500" style="height: {{clientHeight?clientHeight+'px':'auto'}}">
+  <swiper-item class="slide-swiper">
+    <scroll-view scroll-y="true" class='container' style="height: {{clientHeight?clientHeight+'px':'auto'}}">
+      <text>{{note.Title}}</text>
+      <ul id="para_{{para.Order}}" wx:for="{{note.Paragraphs}}" wx:for-item="para" class="flex-container" wx:key="{{para.Order}}">
+        <li wx:for="{{para.C}}" wx:for-item="letter" wx:key="{{letter.Order}}"
+          bindtouchstart="handleTouchStart" 
+          bindtouchend='handleTouchEnd' 
+          bindtouchmove="handleTouchMove"
+          data-Letter="{{letter}}" 
+          selectable="false"
+          bindtap='handleLetterTap'
+          id='letter_{{letter.C}}'
+          class="letter-item {{letter.B}}" >{{letter.C}}</li>
+      </ul>
+      <text
+        class="text-item nested-text-item" 
+        bindtouchstart="handleTouchStart" 
+        bindtouchend='handleTouchEnd' 
+        bindtouchmove="handleTouchMove"
+        data-Para="{{para}}" 
+        selectable="false"
+        bindtap='handleTapI'
+        wx:if="{{para.ShowI}}">{{para.I}}</text>
+    </scroll-view>
+  </swiper-item>
+  <swiper-item class="slide-swiper">
+    <scroll-view scroll-x="false" scroll-y="true" class="container" style="height: {{clientHeight?clientHeight+'px':'auto'}};">
+      <text>拼音和解释</text>
+      <ul wx:for="{{trans}}" wx:for-item="tranitem" class="container" style="width: {{clientWidth?clientWidth+'px':'auto'}};">
+        <li class="letter-item">{{tranitem.C}}</li>
+      </ul>
+    </scroll-view>
+  </swiper-item>
+  <swiper-item class="slide-swiper">
+    <scroll-view scroll-x="false" scroll-y="true" class="container" style="height: {{clientHeight?clientHeight+'px':'auto'}};">
+      <text>翻译和故事</text>
+      <ul wx:for="{{trans}}" wx:for-item="tranitem" class="container" style="width: {{clientWidth?clientWidth+'px':'auto'}};">
+        <li class="letter-item">{{tranitem.C}}</li>
+      </ul>
+    </scroll-view>
+  </swiper-item>
+</swiper>

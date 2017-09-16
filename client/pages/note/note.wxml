@@ -1,0 +1,40 @@
+<!--pages/note/note.wxml-->
+<swiper circular="true" current='{{currentSwiper}}' interval="1000" duration="500" style="height: {{clientHeight?clientHeight+'px':'auto'}}">
+  <swiper-item class="slide-swiper">
+    <scroll-view scroll-y="true" style="height: {{clientHeight?clientHeight+'px':'auto'}}">
+      <text>正文</text>
+      <ul class="flex-container" wx:for="{{inputNoteParagraphs}}" wx:for-item="para" wx:key="Order">
+        <li wx:for="{{para.C}}" wx:for-item="letter" wx:key="{{para.Order}}"
+          bindtouchstart="handleTouchStart" 
+          bindtouchend='handleTouchEnd' 
+          bindtouchmove="handleTouchMove"
+          data-Letter="{{letter}}" 
+          selectable="false"
+          bindtap='handleLetterTap'
+          id='letter_{{letter.C}}'
+          class="letter-item {{letter.B}}" >{{letter.C}}</li>
+      </ul>
+      <text/>
+      <text>附注</text>
+      <ul class="flex-container" wx:for="{{inputRemarkParagraphs}}" wx:for-item="para" wx:key="Order">
+        <li wx:for="{{para.C}}" wx:for-item="letter" wx:key="{{para.Order}}"
+          bindtouchstart="handleTouchStart" 
+          bindtouchend='handleTouchEnd' 
+          bindtouchmove="handleTouchMove"
+          data-Letter="{{letter}}" 
+          selectable="false"
+          bindtap='handleLetterTap'
+          id='letter_{{letter.C}}'
+          class="letter-item {{letter.B}}" >{{letter.C}}</li>
+      </ul>
+    </scroll-view>
+  </swiper-item>
+  <swiper-item class="slide-swiper">
+    <scroll-view scroll-x="false" scroll-y="true" style="height: {{clientHeight?clientHeight+'px':'auto'}};">
+      <text>拼音和解释</text>
+      <ul wx:for="{{trans}}" wx:for-item="tranitem" wx:key="" class="container" style="width: {{clientWidth?clientWidth+'px':'auto'}};">
+        <li class="letter-item">{{tranitem.C}}</li>
+      </ul>
+    </scroll-view>
+  </swiper-item>
+</swiper>
