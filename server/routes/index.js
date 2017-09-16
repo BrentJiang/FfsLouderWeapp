@@ -60,6 +60,17 @@ function getZiWord(letter, callback) {
   }
 };
 
+String.prototype.hexDecode = function () {
+  var j;
+  var hexes = this.match(/.{1,4}/g) || [];
+  var back = "";
+  for (j = 0; j < hexes.length; j++) {
+    back += String.fromCharCode(parseInt(hexes[j], 16));
+  }
+
+  return back;
+}
+
 function get_zi_word(req, res) {
   console.log(req.ip);
   if (!CheckOnLineNum(req)) {
@@ -68,7 +79,7 @@ function get_zi_word(req, res) {
     return;
   }
   //res.send('GET request to the homepage');
-  getZiWord(req.params.letter, function (err, rows) {
+  getZiWord(req.params.letter.hexDecode(), function (err, rows) {
     if (err) {
       // Node.js: printing to console without a trailing newline? https://stackoverflow.com/questions/6157497/node-js-printing-to-console-without-a-trailing-newline
       // process.stdout.write("hello: ");

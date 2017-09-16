@@ -6,6 +6,18 @@ var qcloud = require('../../vendor/qcloud-weapp-client-sdk/index');
 // 引入配置
 var config = require('../../config');
 
+String.prototype.hexEncode = function () {
+  var hex, i;
+
+  var result = "";
+  for (i = 0; i < this.length; i++) {
+    hex = this.charCodeAt(i).toString(16);
+    result += ("000" + hex).slice(-4);
+  }
+
+  return result
+}
+
 Page({
 
   /**
@@ -90,7 +102,7 @@ Page({
       //   autoplay: true
       // });
       qcloud.request({
-        url: `https://${config.service.host}/letter/${letter.C}`,
+        url: `https://${config.service.host}/letter/${letter.C.hexEncode()}`,
         success: function(res) {
           console.log("req letter success: ");
           console.log(res);

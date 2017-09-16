@@ -23,3 +23,7 @@
   box-sizing: border-box;
   border: 1px solid silver;
 } 
+
+.selected {
+  color: lightcoral;
+}
