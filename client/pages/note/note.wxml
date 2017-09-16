@@ -33,6 +33,7 @@
     <scroll-view scroll-x="false" scroll-y="true" style="height: {{clientHeight?clientHeight+'px':'auto'}};">
       <text>拼音和解释</text>
       <ul wx:for="{{trans}}" wx:for-item="tranitem" wx:key="" class="container" style="width: {{clientWidth?clientWidth+'px':'auto'}};">
+        <li class="letter-item">{{tranitem.T}}</li>
         <li class="letter-item">{{tranitem.C}}</li>
       </ul>
     </scroll-view>

@@ -89,18 +89,34 @@ Page({
       // this.setData({
       //   autoplay: true
       // });
-      this.setData({
-        currentSwiper: 1
-      });
       qcloud.request({
         url: `https://${config.service.host}/letter/${letter.C}`,
         success: function(res) {
-          me.data.trans.splice(0, 0, { T: 'letter.C', C: '奖金额' })
-          me.setData({
-            trans: me.data.trans
-          });
+          console.log("req letter success: ");
+          console.log(res);
+          console.log(res.data.length);
+          if (res.data.length == 1) {
+            me.data.trans.splice(0, 0, { T: letter.C, C: res.data[0].Interpretation })
+            me.setData({
+              trans: me.data.trans
+            });
+            me.setData({
+              currentSwiper: 1
+            });
+          }
         }
       });
+    }else{
+      //删除选中状态的文字的解释
+      var array = me.data.trans;
+      for(var i=0; i<array.length; ++i){
+        if(array[i].T == letter.C) {
+          array.splice(i, 1);
+          me.setData({
+            trans: array
+          });
+        }
+      }
     }
   },
 

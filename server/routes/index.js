@@ -42,7 +42,7 @@ function CheckOnLineNum(req) {
     _Hash_OnLineNum_IP_Num[req.ip] = _Hash_OnLineNum_IP_Num[req.ip] + 1;
   }
 
-  if (parseInt(_Hash_OnLineNum_IP_Num[req.ip]) > 12) {
+  if (parseInt(_Hash_OnLineNum_IP_Num[req.ip]) > 1000) {
     return false;
   }
   return true;
