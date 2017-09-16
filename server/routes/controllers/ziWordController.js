@@ -1,6 +1,9 @@
 'use strict';
+var resolve = require('path').resolve
+//resolve('../../bb/tmp.txt')
 
-var ZiWord = require('../models/ZiWordModel');
+var ZiWord = require(resolve('./routes/models/ZiWordModel'));
+console.log("ziwordpath: " + resolve('./routes/models/ZiWordModel'));
 
 var _Hash_OnLineNum_IP_UID = {};//缓冲各个IP的UID,格式: _Hash_OnlineNum_IP[IP]=UID
 var _Hash_OnLineNum_IP_Num = {};//缓冲各个IP的请求数,格式: _Hash_OnlineNum_IP[IP]=int

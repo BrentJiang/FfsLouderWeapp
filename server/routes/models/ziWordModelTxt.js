@@ -1,7 +1,7 @@
 'use strict';
 
 var lineReader = require('readline').createInterface({
-    input: require('fs').createReadStream('./data/chineseLetters.txt')
+    input: require('fs').createReadStream('./routes/data/chineseLetters.txt')
   });
 var chineseDict = {};
 var chineseLetterCounter = 0;  
