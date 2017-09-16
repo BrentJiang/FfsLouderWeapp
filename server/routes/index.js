@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/', require('./welcome'));
 router.get('/login', require('./login'));
 router.get('/user', require('./user'));
-router.get('/ziWordRoutes', require('./ziWordRoutes'));
+router.get('/letter', require('./ziWordRoutes'));
 router.all('/tunnel', require('./tunnel'));
 
 module.exports = router;
