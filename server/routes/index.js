@@ -1,8 +1,13 @@
 'use strict';
 
+//
+// var resolve = require('path').resolve
+// resolve('../../bb/tmp.txt')
+
 const express = require('express');
 const router = express.Router();
-const ziWordController = require('./../controllers/ziWordController');
+
+var ziWordController = require('./controllers/ziWordController');
 
 router.get('/', require('./welcome'));
 router.get('/login', require('./login'));

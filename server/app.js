@@ -28,10 +28,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // parse `application/json`
 app.use(bodyParser.json());
 
-app.use('/', require('./routes'));
-// var myroutes = require('./routes/ziWordRoutes'); //importing route
-// myroutes(app); //register the route
-console.log("ziWord routes added.");
+var routes = require('./routes');
+app.use('/', routes);
 
 // Adding a middleware, https://www.codementor.io/olatundegaruba/nodejs-restful-apis-in-10-minutes-q0sgsfhbd
 app.use(function (req, res) {
