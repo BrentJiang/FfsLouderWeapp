@@ -29,6 +29,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use('/', require('./routes'));
+var ziWordController = require('./controllers/ziWordController');
+app.route('/letters/:letter').get(ziWordController.get_zi_word);
+console.log("ziWord route added.");
 
 // Adding a middleware, https://www.codementor.io/olatundegaruba/nodejs-restful-apis-in-10-minutes-q0sgsfhbd
 app.use(function (req, res) {
