@@ -55,8 +55,10 @@ Page({
 
   handleLetterTap: function(event) {
     console.log(event);
-    var isSelected = false;
     var letter = event.target.dataset.letter;
+    var me = this;
+
+    var isSelected = false;
     //console.log(letter.C);
     //console.log(this.data.note.Paragraphs.length);
     for (var i = 0; i < this.data.inputNoteParagraphs.length; ++i) {
@@ -88,7 +90,6 @@ Page({
       inputRemarkParagraphs: this.data.inputRemarkParagraphs
     })
 
-    var me = this;
     // 自动滑动到右边
     if(isSelected){
       // 滑动
@@ -107,8 +108,16 @@ Page({
           console.log("req letter success: ");
           console.log(res);
           console.log(res.data.length);
-          if (res.data.length == 1) {
+          if (res.data.length >= 1) {
             me.data.trans.splice(0, 0, { T: letter.C, C: res.data[0].Interpretation })
+            me.setData({
+              trans: me.data.trans
+            });
+            me.setData({
+              currentSwiper: 1
+            });
+          }else{
+            me.data.trans.splice(0, 0, { T: letter.C, C: "无详细释义。" })
             me.setData({
               trans: me.data.trans
             });
@@ -197,6 +206,11 @@ Page({
     this.data.currentGesture = 0
     this.setData({
       text: "没有滑动",
+    });
+  }, 
+  returnEdit: function(event) {
+    wx.navigateBack({
+      delta: 1
     });
   }
 })
