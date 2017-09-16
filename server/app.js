@@ -30,6 +30,11 @@ app.use(bodyParser.json());
 
 app.use('/', require('./routes'));
 
+// Adding a middleware, https://www.codementor.io/olatundegaruba/nodejs-restful-apis-in-10-minutes-q0sgsfhbd
+app.use(function (req, res) {
+  res.status(404).send({ url: req.originalUrl + ' 不存在。' })
+});
+
 // 打印异常日志
 process.on('uncaughtException', error => {
     console.log(error);

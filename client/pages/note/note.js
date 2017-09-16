@@ -1,4 +1,11 @@
 // pages/note/note.js
+
+// 引入 QCloud 小程序增强 SDK
+var qcloud = require('../../vendor/qcloud-weapp-client-sdk/index');
+
+// 引入配置
+var config = require('../../config');
+
 Page({
 
   /**
@@ -85,8 +92,8 @@ Page({
       this.setData({
         currentSwiper: 1
       });
-      wx.request({
-        url: "https://97107609.qcloud.la/letter/"+letter.C,
+      qcloud.request({
+        url: `https://${config.service.host}/letter/${letter.C}`,
         success: function(res) {
           me.data.trans.splice(0, 0, { T: 'letter.C', C: '奖金额' })
           me.setData({
