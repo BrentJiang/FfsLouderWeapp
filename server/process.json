@@ -1,5 +1,5 @@
 {
-    "name": "weapp",
+    "name": "ffslouder",
     "script": "app.js",
     "cwd": "./",
     "exec_mode": "fork",
