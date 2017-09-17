@@ -41,6 +41,9 @@ Page({
      * 初始数据，我们把服务地址显示在页面上
      */
     data: {
+      messages: [],
+      inputContent: '',
+      lastMessageId: 'none',
     },
     onLoad: function(options){
       showBusy('正在登录');
@@ -60,8 +63,44 @@ Page({
 
     },
 
+    sendMessage(e) {
+      var me = this;
+      setTimeout(() => {
+        if (this.data.inputContent) {
+          qcloud.request({
+            url: `https://${config.service.host}/letter/${this.data.inputContent.hexEncode()}`,
+            success: function (res) {
+              console.log("req letter success: ");
+              console.log(res);
+              console.log(res.data.length);
+              if (res.data.length >= 1) {
+                me.data.trans.splice(0, 0, { T: letter.C, C: res.data[0].Interpretation })
+                me.setData({
+                  trans: me.data.trans
+                });
+                me.setData({
+                  currentSwiper: 1
+                });
+              } else {
+                me.data.trans.splice(0, 0, { T: letter.C, C: "无详细释义。" })
+                me.setData({
+                  trans: me.data.trans
+                });
+                me.setData({
+                  currentSwiper: 1
+                });
+              }
+            }
+          });
+          this.setData({ inputContent: '' });
+        }
+      });
+
+
+    },
+
     /**
-     * 点击「聊天室」按钮，跳转到聊天室综合 Demo 的页面
+     * 点击「手工创建一页书」按钮，跳转到一页书制作界面
      */
     openChat() {
         wx.navigateTo({ url: '../manual/manual' });
