@@ -10,7 +10,7 @@
       <view class="line">
           <text>最近访问</text>
       </view>
-      <view class="line-control" wx:for="{{recentbooks}}" wx:for-item="recentbook">
+      <view class="line-control" wx:for="{{recentbooks}}" wx:for-item="recentbook" wx:key="">
       </view>
     </scroll-view>
     <scroll-view class="chat-container" scroll-y scroll-into-view="{{lastMessageId}}" scroll-top="9999999999">

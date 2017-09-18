@@ -55,6 +55,7 @@ Page({
         success(result) {
           showSuccess('登录成功');
           console.log('登录成功', result);
+          // 只有request /user之后才会真正到服务器上登录，并且得到openid信息。
           // 如果登录过，会记录当前用户在 this.me 上
           if (!that.me) {
             qcloud.request({
@@ -62,7 +63,7 @@ Page({
                 login: true,
                 success: (response) => {
                     this.me = response.data.data.userInfo;
-                    this.connect();
+                    require('../../service/userrun').initializeClient(this.me.openId);
                 }
             });
           }
