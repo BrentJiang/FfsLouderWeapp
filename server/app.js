@@ -8,6 +8,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const config = require('./config');
+const fastmiss = require('./routes/fastmiss')
+
+fastmiss.initRawChineseDict();
 
 const app = express();
 

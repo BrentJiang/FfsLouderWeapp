@@ -8,6 +8,8 @@ var qcloud = require('../../vendor/qcloud-weapp-client-sdk/index');
 // 引入配置
 var config = require('../../config');
 
+var UserRun = require('../../service/userrun');
+
 // 显示繁忙提示
 var showBusy = text => wx.showToast({
     title: text,
@@ -82,7 +84,7 @@ Page({
       setTimeout(() => {
         if (this.data.inputContent) {
           qcloud.request({
-            url: `https://${config.service.host}/letter/${this.data.inputContent.hexEncode()}`,
+            url: `https://${config.service.host}/letter/${this.data.inputContent.hexEncode()}/${UserRun.getOpenId()}`,
             success: function (res) {
               console.log("req letter success: ");
               console.log(res);

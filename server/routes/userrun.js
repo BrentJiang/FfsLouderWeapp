@@ -54,7 +54,9 @@ function initializeUser(data) {
     if(fs.existsSync(datafile)){
         fs.readFile(datafile, (err, data)=>{
             if(!err) {
-                UserCache[data.userInfo.openId].letters.knownLetters = data.toString().split("\r\n");
+                var res = data.toString().split("\r\n");
+                if(res != null)
+                    UserCache[data.userInfo.openId].letters.knownLetters = res;
             }
         });
     }

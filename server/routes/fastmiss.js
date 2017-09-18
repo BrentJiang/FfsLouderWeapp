@@ -1,5 +1,5 @@
 'use restrict'
-var _ = require('./../3rdparty/underscore-min')
+//var _ = require('./../3rdparty/underscore-min')
 // 19968	40895	4E00	9FBF	20928	CJK 统一表意符号	CJK Unified Ideographs
 var first = 0x4e00;
 var rawLen = (0x9fbf - 0x4e00);
@@ -12,12 +12,13 @@ function initRawChineseDict() {
     }
 }
 
-console.time("fastmiss");
-initRawChineseDict();
-console.timeEnd("fastmiss");
+//console.time("fastmiss");
+//initRawChineseDict();
+//console.timeEnd("fastmiss");
 
 // 用C#实现同样的查找不同并排重功能差不多耗时0.266ms。
 function fastFindMismatchChinese(knownLetters, inputLetters, endAction) {
+    console.log(`fast miss for ${inputLetters}`)
     var missStr = [];
 
     console.time("findmiss");
@@ -67,5 +68,6 @@ function fastFindMismatchChinese(knownLetters, inputLetters, endAction) {
 }
 
 module.exports = {
+    initRawChineseDict: initRawChineseDict,
     fastFindMismatchChinese: fastFindMismatchChinese
 };

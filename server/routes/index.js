@@ -3,7 +3,7 @@
 //
 var resolve = require('path').resolve
 // resolve('../../bb/tmp.txt')
-var Fastmiss = require('./routes/fastmiss');
+var Fastmiss = require('./fastmiss');
 var UserRun = require('./userrun');
 
 const express = require('express');

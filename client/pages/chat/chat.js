@@ -9,6 +9,8 @@ var qcloud = require('../../vendor/qcloud-weapp-client-sdk/index');
 // 引入配置
 var config = require('../../config');
 
+var UserRun = require('../../service/userrun');
+
 /**
  * 生成一条聊天室的消息的唯一 ID
  */
