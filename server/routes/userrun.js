@@ -3,8 +3,10 @@
 // 所以使用一个定时器，客户端会定期kick，如果超过2次没有被kick到，则清理缓存。
 var UserCache = {};
 var fs = require('fs');
-var most2000 = fs.readFileSync('./data/most2000.txt', 'utf8').toString().split("\r\n");
-var most3000 = fs.readFileSync('./data/most3000.txt', 'utf8').toString().split("\r\n");
+var datapath = resolve('./routes/data/most2000.txt');
+var most2000 = fs.readFileSync(datapath, 'utf8').toString().split("\r\n");
+datapath = resolve('./routes/data/most3000.txt');
+var most3000 = fs.readFileSync(datapath, 'utf8').toString().split("\r\n");
 
 function checkUserTimeout(arg) {
     console.log(`arg was => ${arg}`);
