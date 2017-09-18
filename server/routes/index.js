@@ -70,11 +70,13 @@ function getZiWord(letter, openid, callback) {
       callback({ "result": "use not login." }, null);
       return;
     } else {
-      Fastmiss.fastFindMismatchChinese(track.baseLetters.push(track.knownLetters), letter, function(result, missStr) {
+      console.log(track);
+      Fastmiss.fastFindMismatchChinese(track.baseLetters + track.knownLetters, letter, function(result, missStr) {
         console.log("end = " + result + ", miss: " + missStr);
         if(missStr.length > 0) {
           var resarr = [];
           for(var i=0; i<missStr.length;++i){
+            letter = missStr[i];
             if (letter in chineseDict) {
               console.log(`find ${letter}!`);
               resarr.push(chineseDict[letter]);

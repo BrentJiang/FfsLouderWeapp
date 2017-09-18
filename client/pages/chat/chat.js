@@ -43,15 +43,29 @@ Page({
      */
     data: {
         messages: [],
-        inputContent: '大家好啊',
+        inputContent: '',
         lastMessageId: 'none',
+    },
+
+    onLoad: function(options) {
+       var me = this;
+       var data = wx.getStorage({
+         key: 'lastQuery',
+         success: function(res) {
+            console.log(res);
+            for(var i=0; i<res.data.length; ++i){
+                me.pushMessage(createUserMessage(res.data[i].letter, UserRun.getUserInfo(), false));
+                me.pushMessage(createUserMessage(res.data[i].Interpretation, UserRun.getUserInfo(), false));
+            }
+         },
+       })
     },
 
     /**
      * 页面渲染完成后，启动聊天室
      * */
     onReady() {
-        wx.setNavigationBarTitle({ title: '三木聊天室' });
+        wx.setNavigationBarTitle({ title: '查询记录' });
 
         if (!this.pageReady) {
             this.pageReady = true;
@@ -86,7 +100,7 @@ Page({
      * 启动聊天室
      */
     enter() {
-        this.pushMessage(createSystemMessage('正在登录...'));
+        //this.pushMessage(createSystemMessage('正在登录...'));
 
         // 如果登录过，会记录当前用户在 this.me 上
         if (!this.me) {
@@ -95,11 +109,11 @@ Page({
                 login: true,
                 success: (response) => {
                     this.me = response.data.data.userInfo;
-                    this.connect();
+                    //this.connect();
                 }
             });
         } else {
-            this.connect();
+            //this.connect();
         }
     },
 
@@ -205,20 +219,39 @@ Page({
      * 点击「发送」按钮，通过信道推送消息到服务器
      **/
     sendMessage(e) {
-        // 信道当前不可用
-        if (!this.tunnel || !this.tunnel.isActive()) {
-            this.pushMessage(createSystemMessage('您还没有加入群聊，请稍后重试'));
-            if (this.tunnel.isClosed()) {
-                this.enter();
-            }
-            return;
-        }
+        // // 信道当前不可用
+        // if (!this.tunnel || !this.tunnel.isActive()) {
+        //     this.pushMessage(createSystemMessage('您还没有加入群聊，请稍后重试'));
+        //     if (this.tunnel.isClosed()) {
+        //         this.enter();
+        //     }
+        //     return;
+        // }
 
-        setTimeout(() => {
-            if (this.data.inputContent && this.tunnel) {
-                this.tunnel.emit('speak', { word: this.data.inputContent });
-                this.setData({ inputContent: '' });
+        // setTimeout(() => {
+        //     if (this.data.inputContent && this.tunnel) {
+        //         this.tunnel.emit('speak', { word: this.data.inputContent });
+        //         this.setData({ inputContent: '' });
+        //     }
+        // });
+      var me = this;
+      setTimeout(() => {
+        if (this.data.inputContent) {
+          qcloud.request({
+            url: `https://${config.service.host}/letter/${this.data.inputContent.hexEncode()}/${UserRun.getOpenId()}`,
+            success: function (res) {
+              console.log("req letter success: ");
+              console.log(res);
+              for (var i = 0; i < res.data.length; ++i) {
+                me.pushMessage(createUserMessage(res.data[i].letter, UserRun.getUserInfo(), false));
+                me.pushMessage(createUserMessage(res.data[i].Interpretation, UserRun.getUserInfo(), false));
+              }
             }
-        });
+          });
+          var who = UserRun.getUserInfo();
+          this.pushMessage(createUserMessage(this.data.inputContent, who, true));
+          this.setData({ inputContent: '' });
+        }
+      });
     },
 });

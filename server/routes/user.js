@@ -13,8 +13,7 @@ module.exports = (req, res) => {
                 'code': 0,
                 'message': 'ok',
                 'data': {
-                    'userInfo': data.userInfo,
-                    'data': data
+                    'userInfo': data.userInfo
                 },
             });
 

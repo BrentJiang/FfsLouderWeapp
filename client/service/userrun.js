@@ -6,7 +6,7 @@ var qcloud = require('../vendor/qcloud-weapp-client-sdk/index');
 // 引入配置
 var config = require('../config');
 
-var openId = null;
+var userInfo = null;
 var timeout = null;
 
 function checkUserTimeout() {
@@ -18,17 +18,24 @@ function checkUserTimeout() {
     });
 }
 
-function initializeClient(openid) {
-  console.log(`openid was => ${openid}`);
-  openId = openid;
+function initializeClient(userinfo) {
+  userInfo = userinfo;
+  console.log(`userInfo was => ${userInfo}`);
   timeout = setInterval(checkUserTimeout, 15000);
 }
 
 function getOpenId() {
-  return openId;
+  if (userInfo == null)
+    return "";
+  return userInfo.openId;
+}
+
+function getUserInfo() {
+  return userInfo;
 }
 
 module.exports = {
     initializeClient: initializeClient,
-    getOpenId: getOpenId
+    getOpenId: getOpenId,
+    getUserInfo: getUserInfo
 };

@@ -51,7 +51,6 @@ Page({
     onLoad: function(options){
       showBusy('正在登录');
       var that = this;
-
       // 登录之前需要调用 qcloud.setLoginUrl() 设置登录地址，不过我们在 app.js 的入口里面已经调用过了，后面就不用再调用了
       qcloud.login({
         success(result) {
@@ -64,8 +63,9 @@ Page({
                 url: `https://${config.service.host}/user`,
                 login: true,
                 success: (response) => {
-                    this.me = response.data.data.userInfo;
-                    require('../../service/userrun').initializeClient(this.me.openId);
+                    console.log(response);
+                    UserRun.initializeClient(response.data.data.userInfo);
+                    that.me = response.data.data.userInfo;
                 }
             });
           }
@@ -88,31 +88,18 @@ Page({
             success: function (res) {
               console.log("req letter success: ");
               console.log(res);
-              console.log(res.data);
-              if (res.data.length >= 1) {
-                me.data.trans.splice(0, 0, { T: me.data.inputContent, C: res.data[0].Interpretation })
-                me.setData({
-                  trans: me.data.trans
-                });
-                me.setData({
-                  currentSwiper: 1
-                });
-              } else {
-                me.data.trans.splice(0, 0, { T: me.data.inputContent, C: "无详细释义。" })
-                me.setData({
-                  trans: me.data.trans
-                });
-                me.setData({
-                  currentSwiper: 1
-                });
-              }
+              wx.setStorage({
+                key: 'lastQuery',
+                data: res.data,
+              });
+              wx.navigateTo({
+                url: '../chat/chat',
+              })
             }
           });
           this.setData({ inputContent: '' });
         }
       });
-
-
     },
 
     /**

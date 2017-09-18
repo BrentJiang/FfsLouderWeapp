@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/note/note",
+    "pages/chat/chat",
     "pages/manual/manual"
   ],
   "window": {

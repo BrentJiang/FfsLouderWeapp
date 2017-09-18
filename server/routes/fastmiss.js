@@ -1,5 +1,5 @@
 'use restrict'
-//var _ = require('./../3rdparty/underscore-min')
+var _ = require('./../3rdparty/underscore-min')
 // 19968	40895	4E00	9FBF	20928	CJK 统一表意符号	CJK Unified Ideographs
 var first = 0x4e00;
 var rawLen = (0x9fbf - 0x4e00);
@@ -21,7 +21,7 @@ function fastFindMismatchChinese(knownLetters, inputLetters, endAction) {
     console.log(`fast miss for ${inputLetters}`)
     var missStr = [];
 
-    console.time("findmiss");
+    //console.time("findmiss");
     // ref: https://stackoverflow.com/a/39538871/351993
     //let knownLetters = [...knownLetters];
     //knownLetters = knownLetters.split[""]
@@ -56,8 +56,9 @@ function fastFindMismatchChinese(knownLetters, inputLetters, endAction) {
     }
     // 非常消耗性能。most3000-most2000之后，在most3000最后添加‘匕’字，
     // 未union时仅需0.3ms，添加union之后需要11ms左右！
-    //missStr = _.union(missStr);
-    console.timeEnd("findmiss");
+    // 但是还是得加！如果inputString短就不会有问题。
+    missStr = _.union(missStr);
+    //console.timeEnd("findmiss");
 
     // 结论：还是在查找 == 0 之后，再进行union。
 
