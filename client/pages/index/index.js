@@ -48,12 +48,24 @@ Page({
     },
     onLoad: function(options){
       showBusy('正在登录');
+      var that = this;
 
       // 登录之前需要调用 qcloud.setLoginUrl() 设置登录地址，不过我们在 app.js 的入口里面已经调用过了，后面就不用再调用了
       qcloud.login({
         success(result) {
           showSuccess('登录成功');
           console.log('登录成功', result);
+          // 如果登录过，会记录当前用户在 this.me 上
+          if (!that.me) {
+            qcloud.request({
+                url: `https://${config.service.host}/user`,
+                login: true,
+                success: (response) => {
+                    this.me = response.data.data.userInfo;
+                    this.connect();
+                }
+            });
+          }
         },
 
         fail(error) {

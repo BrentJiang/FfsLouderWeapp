@@ -2,6 +2,8 @@
 
 const LoginService = require('qcloud-weapp-server-sdk').LoginService;
 
+var UserRun = require('./userrun');
+
 module.exports = (req, res) => {
     const loginService = LoginService.create(req, res);
 
@@ -15,5 +17,7 @@ module.exports = (req, res) => {
                     'data': data
                 },
             });
+
+            UserRun.initializeUser(data);
         });
 };
