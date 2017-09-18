@@ -3,6 +3,8 @@
 // 所以使用一个定时器，客户端会定期kick，如果超过2次没有被kick到，则清理缓存。
 var UserCache = {};
 var fs = require('fs');
+var resolve = require('path').resolve;
+
 var datapath = resolve('./routes/data/most2000.txt');
 var most2000 = fs.readFileSync(datapath, 'utf8').toString().split("\r\n");
 datapath = resolve('./routes/data/most3000.txt');
@@ -26,11 +28,12 @@ function checkUserTimeout(arg) {
 // todo 2017-09-18 最好是用户的每一个请求都可以记录下来原始数据，这样以后就可以
 // 提供给用户学习历史记录追溯功能了。但这个需要数据库支持。
 function initializeUser(data) {
-    console.log("initialize user:");
-    console.log(data);
     if(UserCache.hasOwnProperty(data.userInfo.openId)){
+        console.log("user kicked.");
         return;
     }
+    console.log("initialize user:");
+    console.log(data);
     UserCache[data.userInfo.openId] = {
         timeout: 0, // 初始设为0。若Timeout，则置为1。如果下一次还是1，表示客户端没有踢，就此删除缓存。
         letters: {
