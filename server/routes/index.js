@@ -84,7 +84,8 @@ function get_zi_word(req, res) {
       // Node.js: printing to console without a trailing newline? https://stackoverflow.com/questions/6157497/node-js-printing-to-console-without-a-trailing-newline
       // process.stdout.write("hello: ");
       console.log("error: " + err);
-      res.json(err);
+      //res.json(err);
+      res.json([]);
     }
     else {
       //onsole.log("find "+rows+" from model.");
