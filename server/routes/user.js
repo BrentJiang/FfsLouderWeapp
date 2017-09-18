@@ -7,6 +7,8 @@ module.exports = (req, res) => {
 
     loginService.check()
         .then(data => {
+            console.log("login data:");
+            console.log(data);
             res.json({
                 'code': 0,
                 'message': 'ok',

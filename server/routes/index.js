@@ -72,7 +72,7 @@ String.prototype.hexDecode = function () {
 }
 
 function get_zi_word(req, res) {
-  console.log(req);
+  //console.log(req);
   if (!CheckOnLineNum(req)) {
     //res.json("已超出访问限制！");
     res.json([]);

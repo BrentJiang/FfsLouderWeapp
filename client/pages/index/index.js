@@ -42,6 +42,7 @@ Page({
      */
     data: {
       messages: [],
+      trans: [],
       inputContent: '',
       lastMessageId: 'none',
     },
@@ -72,9 +73,9 @@ Page({
             success: function (res) {
               console.log("req letter success: ");
               console.log(res);
-              console.log(res.data.length);
+              console.log(res.data);
               if (res.data.length >= 1) {
-                me.data.trans.splice(0, 0, { T: letter.C, C: res.data[0].Interpretation })
+                me.data.trans.splice(0, 0, { T: me.data.inputContent, C: res.data[0].Interpretation })
                 me.setData({
                   trans: me.data.trans
                 });
@@ -82,7 +83,7 @@ Page({
                   currentSwiper: 1
                 });
               } else {
-                me.data.trans.splice(0, 0, { T: letter.C, C: "无详细释义。" })
+                me.data.trans.splice(0, 0, { T: me.data.inputContent, C: "无详细释义。" })
                 me.setData({
                   trans: me.data.trans
                 });
@@ -97,6 +98,13 @@ Page({
       });
 
 
+    },
+
+    /**
+     * 用户输入的内容改变之后
+     */
+    changeInputContent(e) {
+      this.setData({ inputContent: e.detail.value });
     },
 
     /**
