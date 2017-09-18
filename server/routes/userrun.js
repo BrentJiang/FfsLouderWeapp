@@ -3,6 +3,7 @@
 // 所以使用一个定时器，客户端会定期kick，如果超过2次没有被kick到，则清理缓存。
 var UserCache = {};
 var fs = require('fs');
+
 var resolve = require('path').resolve;
 
 var datapath = resolve('./routes/data/most2000.txt');
@@ -19,6 +20,10 @@ function checkUserTimeout(arg) {
         } else if(UserCache[arg].timeout >= 1) {
             // clear cache
             clearTimeout(UserCache[arg].timeoutHandler);
+            var datafile = `./routes/runtime/${arg}`;
+            fs.writeFile(datafile, UserCache[arg].letters.knownLetters.join("\n"), (err)=>{
+                console.error(`failed to write ${datafile}: ${err}`);
+            });
             delete UserCache[arg];
             console.log(`user ${arg} is timed out and removed!`);
         }
@@ -45,10 +50,21 @@ function initializeUser(data) {
         timeoutHandler: setInterval(checkUserTimeout, 40000, data.userInfo.openId)
     };
     //console.log(data.userInfo);
+    var datafile = `./routes/runtime/${data.userInfo.openId}`;
+    if(fs.existsSync(datafile)){
+        fs.readFile(datafile, (err, data)=>{
+            if(!err) {
+                UserCache[data.userInfo.openId].letters.knownLetters = data.toString().split("\r\n");
+            }
+        });
+    }
 }
 
 function getUserTrack(openid) {
-
+    if(UserCache.hasOwnProperty(openid)){
+        return UserCache[openid];
+    }
+    return null;
 }
 
 module.exports = {

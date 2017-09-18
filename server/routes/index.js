@@ -3,6 +3,8 @@
 //
 var resolve = require('path').resolve
 // resolve('../../bb/tmp.txt')
+var Fastmiss = require('./routes/fastmiss');
+var UserRun = require('./userrun');
 
 const express = require('express');
 const router = express.Router();
@@ -48,15 +50,43 @@ function CheckOnLineNum(req) {
   return true;
 }
 
-function getZiWord(letter, callback) {
-  console.log('query from txt: ');
-  console.log(letter);
-  if (letter in chineseDict) {
-    console.log("find it!");
-    callback(null, [chineseDict[letter]]);
-  } else {
-    console.log("not found!");
-    callback({ "result": "not found." }, null);
+function getZiWord(letter, openid, callback) {
+  console.log(`query from txt: letter=${letter}, openid=${openid}`);
+  if(letter.length < 1 || openid == null){
+    callback({ "result": "error input letter or openid!" }, null);
+  }
+  if(letter.length == 1){
+    if (letter in chineseDict) {
+      console.log("find it!");
+      callback(null, [chineseDict[letter]]);
+    } else {
+      console.log("not found!");
+      callback({ "result": "not found." }, null);
+    }
+  } else if(letter.length > 1) {
+    var track = UserRun.getUserTrack(openid);
+    if(track == null){
+      console.log("user not login!");
+      callback({ "result": "use not login." }, null);
+      return;
+    } else {
+      Fastmiss.fastFindMismatchChinese(track.baseLetters.push(track.knownLetters), letter, function(result, missStr) {
+        console.log("end = " + result + ", miss: " + missStr);
+        if(missStr.length > 0) {
+          var resarr = [];
+          for(var i=0; i<missStr.length;++i){
+            if (letter in chineseDict) {
+              console.log(`find ${letter}!`);
+              resarr.push(chineseDict[letter]);
+            }     
+          }
+          callback(null, resarr);
+        } else {
+          console.log("not found!");
+          callback({ "result": "not found." }, null);
+        } 
+      });      
+    }    
   }
 };
 
@@ -79,7 +109,7 @@ function get_zi_word(req, res) {
     return;
   }
   //res.send('GET request to the homepage');
-  getZiWord(req.params.letter.hexDecode(), function (err, rows) {
+  getZiWord(req.params.letter.hexDecode(), req.params.openid, function (err, rows) {
     if (err) {
       // Node.js: printing to console without a trailing newline? https://stackoverflow.com/questions/6157497/node-js-printing-to-console-without-a-trailing-newline
       // process.stdout.write("hello: ");
@@ -97,7 +127,7 @@ function get_zi_word(req, res) {
 router.get('/', require('./welcome'));
 router.get('/login', require('./login'));
 router.get('/user', require('./user'));
-router.get('/letter/:letter', get_zi_word);
+router.get('/letter/:letter/:openid', get_zi_word);
 router.all('/tunnel', require('./tunnel'));
 
 module.exports = router;
