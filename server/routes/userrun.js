@@ -20,7 +20,7 @@ function checkUserTimeout(arg) {
             // clear cache
             clearTimeout(UserCache[arg].timeoutHandler);
             delete UserCache[arg];
-            console.log(arg + " is timed out and removed!");
+            console.log(`user ${arg} is timed out and removed!`);
         }
     }
 }
@@ -29,7 +29,8 @@ function checkUserTimeout(arg) {
 // 提供给用户学习历史记录追溯功能了。但这个需要数据库支持。
 function initializeUser(data) {
     if(UserCache.hasOwnProperty(data.userInfo.openId)){
-        console.log("user kicked.");
+        console.log(`user ${data.userInfo.openId} kicked.`);
+        UserCache[data.userInfo.openId].timeout = 0;
         return;
     }
     console.log("initialize user:");
@@ -41,7 +42,7 @@ function initializeUser(data) {
             knownLetters: [],//等会儿异步处理
         }, 
         // 客户端15000毫秒踢一次，如果30000毫秒中都没有改变表示已经断线
-        timeoutHandler: setInterval(checkUserTimeout, 3000, data.userInfo.openId)
+        timeoutHandler: setInterval(checkUserTimeout, 40000, data.userInfo.openId)
     };
     //console.log(data.userInfo);
 }

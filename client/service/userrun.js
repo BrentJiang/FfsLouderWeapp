@@ -19,7 +19,7 @@ function checkUserTimeout() {
 
 function initializeClient(openid) {
   console.log(`openid was => ${openid}`);
-  timeout = setInterval(checkUserTimeout, 1500);
+  timeout = setInterval(checkUserTimeout, 15000);
 }
 
 module.exports = {
