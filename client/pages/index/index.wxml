@@ -1,16 +1,25 @@
 <view class="page-wrap">
     <view class="line">
         <text>一页书</text>
+    </view>
+    <view class="line">
         <view bindtap="openChat" class="demo">
             手工创建
             <view class="link">开始 ></view>
         </view>
     </view>
+    <view class="line">
+        <text>最近访问</text>
+    </view>
     <scroll-view class="chat-container" scroll-y scroll-top="9999999999">
-      <view class="line">
-          <text>最近访问</text>
-      </view>
       <view class="line-control" wx:for="{{recentbooks}}" wx:for-item="recentbook" wx:key="">
+      </view>
+    </scroll-view>
+    <view class="line">
+        <text>书籍列表</text>
+    </view>
+    <scroll-view class="chat-container" scroll-y scroll-top="9999999999">
+      <view class="line-control" wx:for="{{books}}" wx:for-item="book" wx:key="">
       </view>
     </scroll-view>
     <scroll-view class="chat-container" scroll-y scroll-into-view="{{lastMessageId}}" scroll-top="9999999999">

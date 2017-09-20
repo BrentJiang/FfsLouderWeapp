@@ -3,7 +3,9 @@
  */
 
 // 此处主机域名修改成腾讯云解决方案分配的域名
-var host = '97107609.qcloud.la';
+//var host = '97107609.qcloud.la';
+//var host = '413082455.funfunsay.com';
+var host = '37968345.funfunsay.com';
 
 var config = {
 
