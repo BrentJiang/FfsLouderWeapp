@@ -9,6 +9,6 @@ router.get('/login', require('./login'));
 router.get('/user', require('./user'));
 router.get('/letter/:letter/:openid', require('./chinesedict').get_zi_word);
 router.all('/tunnel', require('./tunnel'));
-router.get('/books/:startIndex', require('./books').get_books);
+router.get('/books/:startIndex', require('./books').get_book_list);
 
 module.exports = router;
